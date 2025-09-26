@@ -1,5 +1,5 @@
-import * as React from 'react'
 import { Outlet, createRootRoute } from '@tanstack/react-router'
+import Navbar from '@/components/Navbar'
 
 export const Route = createRootRoute({
   component: RootComponent,
@@ -7,9 +7,12 @@ export const Route = createRootRoute({
 
 function RootComponent() {
   return (
-    <React.Fragment>
-      <div>Hello "__root"!</div>
-      <Outlet />
-    </React.Fragment>
+    <div className='container mx-auto'>
+      <Navbar />
+      <main className='min-h-screen px-4 sm:px-6 lg:px-8'>
+        <Outlet />
+      </main>
+      <p>Footer</p>
+    </div>
   )
 }
