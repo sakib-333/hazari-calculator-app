@@ -12,15 +12,15 @@ export default function ToalScoreTable() {
         return <h1>No data Found</h1>
     }
 
-    function getTotal(score: number[]):number {
-      return score.reduce((acc, curr) => acc + curr, 0);
+    function getTotal(score: number[]): number {
+      return (score.reduce((acc, curr) => acc + curr, 0));
     }
 
   const rows = [
-    { no: 1, player: game.score1.playerName, score: getTotal(game.score1.scores), require: 1000 - getTotal(game.score1.scores) },
-    { no: 2, player: game.score2.playerName, score: getTotal(game.score2.scores), require: 1000 - getTotal(game.score2.scores) },
-    { no: 3, player: game.score3.playerName, score: getTotal(game.score1.scores), require: 1000 - getTotal(game.score1.scores) },
-    { no: 4, player: game.score4.playerName, score: getTotal(game.score1.scores), require: 1000 - getTotal(game.score1.scores) },
+    { no: 1, player: game.score1.playerName, score: getTotal(game.score1.scores), require: 1000 - getTotal(game.score1.scores) < 0 ? 0 : 1000 - getTotal(game.score1.scores)},
+    { no: 2, player: game.score2.playerName, score: getTotal(game.score2.scores), require: 1000 - getTotal(game.score2.scores) < 0 ? 0 : 1000 - getTotal(game.score2.scores)},
+    { no: 3, player: game.score3.playerName, score: getTotal(game.score3.scores), require: 1000 - getTotal(game.score3.scores) < 0 ? 0 : 1000 - getTotal(game.score3.scores)},
+    { no: 4, player: game.score4.playerName, score: getTotal(game.score4.scores), require: 1000 - getTotal(game.score4.scores) < 0 ? 0 : 1000 - getTotal(game.score4.scores)},
   ].sort((a, b) => b.score - a.score);
 
   return (

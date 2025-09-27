@@ -15,9 +15,10 @@ export const deleteGame = (gameId: string) => ({
      gameId
 })
 
-export const addScore = (scores: number[]) => ({
+export const addScore = (gameId: string, scores: number[]) => ({
      type: ADD_SCORE,
-     scores: [...scores]
+     scores: [...scores],
+     gameId
 })
 
 export const deleteLastScore = () => ({

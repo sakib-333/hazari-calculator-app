@@ -5,6 +5,7 @@ import './index.css'
 import { routeTree } from './routeTree.gen'
 import { createRouter, RouterProvider } from '@tanstack/react-router'
 import store from './redux/store';
+import { Toaster } from 'sonner';
 
 const router = createRouter({ routeTree })
 
@@ -17,5 +18,6 @@ declare module '@tanstack/react-router' {
 createRoot(document.getElementById('root')!).render(
   <Provider store={store}>
     <RouterProvider router={router} />
+    <Toaster position='top-center' />
   </Provider>
 )

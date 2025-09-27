@@ -3,17 +3,22 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { addScore } from "@/redux/actions";
+import { useDispatch } from "react-redux";
+import { toast } from "sonner";
 
 type Scores = { score1: string; score2: string; score3: string; score4: string };
 
 interface AddScoreDialogProps {
   open: boolean;
   setOpen: (v: boolean) => void;
+  gameId: string;
 }
 
-export default function AddScoreDialog({ open, setOpen }: AddScoreDialogProps) {
+export default function AddScoreDialog({ open, setOpen, gameId }: AddScoreDialogProps) {
   const [scores, setScores] = React.useState<Scores>({ score1: "", score2: "", score3: "", score4: "" });
   const [total, setTotal] = React.useState<string>("0");
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
      const total = Number(scores.score1)+Number(scores.score2)+Number(scores.score3)+Number(scores.score4)
@@ -45,9 +50,13 @@ function handleAuto(index: number) {
     const condition2 = Number(score1) + Number(score2) + Number(score3) + Number(score4) === 360;
 
     if(!condition1 && condition2) {
-     console.log("save score");
+    const newScores = [Number(score1), Number(score2), Number(score3), Number(score4)];
+
+    // console.log(newScores);
+
+    dispatch(addScore(gameId, newScores));
     } else {
-     console.log("Invaild score");
+     toast("Invaild score");
     }
 
 //     if(scores.score1)
