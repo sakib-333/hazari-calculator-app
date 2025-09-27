@@ -9,14 +9,14 @@ export default function ToalScoreTable() {
   ];
 
   return (
-    <div className="w-full mx-auto">
+    <div className="w-full mx-auto text-center">
       <Table className="border border-border">
         <TableHeader className="bg-muted/50">
           <TableRow className="border-b border-border">
-            <TableHead className="w-[60px] border-r border-border">No.</TableHead>
-            <TableHead className="border-r border-border">Player</TableHead>
-            <TableHead className="border-r border-border">Score</TableHead>
-            <TableHead>Require</TableHead>
+            <TableHead className="w-[60px] border-r border-border text-center">No.</TableHead>
+            <TableHead className="border-r border-border text-center">Player</TableHead>
+            <TableHead className="border-r border-border text-center">Score</TableHead>
+            <TableHead className="text-center">Require</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

@@ -10,15 +10,15 @@ export default function ScoreDetailsTable() {
           { round: 5, score1: 80, score2: 90, score3: 90, score4: 100 },
      ];
      return (
-          <div className="w-full mx-auto">
+          <div className="w-full mx-auto text-center">
                <Table className="border border-border">
                     <TableHeader className="bg-muted/50">
                          <TableRow className="border-b border-border">
-                              <TableHead className="w-[60px] border-r border-border">Round</TableHead>
-                              <TableHead className="border-r border-border">Player-1</TableHead>
-                              <TableHead className="border-r border-border">Player-2</TableHead>
-                              <TableHead className="border-r border-border">Player-3</TableHead>
-                              <TableHead>Player-4</TableHead>
+                              <TableHead className="w-[60px] border-r border-border text-center">Round</TableHead>
+                              <TableHead className="border-r border-border text-center">Player-1</TableHead>
+                              <TableHead className="border-r border-border text-center">Player-2</TableHead>
+                              <TableHead className="border-r border-border text-center">Player-3</TableHead>
+                              <TableHead className="text-center">Player-4</TableHead>
                          </TableRow>
                     </TableHeader>
                     <TableBody>
