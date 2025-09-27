@@ -1,16 +1,10 @@
 import * as React from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 
-type Scores = { p1: string; p2: string; p3: string; p4: string };
+type Scores = { score1: string; score2: string; score3: string; score4: string };
 
 interface AddScoreDialogProps {
   open: boolean;
@@ -18,29 +12,54 @@ interface AddScoreDialogProps {
 }
 
 export default function AddScoreDialog({ open, setOpen }: AddScoreDialogProps) {
-  const [scores, setScores] = React.useState<Scores>({ p1: "", p2: "", p3: "", p4: "" });
+  const [scores, setScores] = React.useState<Scores>({ score1: "", score2: "", score3: "", score4: "" });
+  const [total, setTotal] = React.useState<string>("0");
+
+  React.useEffect(() => {
+     const total = Number(scores.score1)+Number(scores.score2)+Number(scores.score3)+Number(scores.score4)
+     setTotal(String(total));
+  }, [scores])
 
   function setField<K extends keyof Scores>(key: K, value: string) {
     setScores((s) => ({ ...s, [key]: value }));
-  }
+}
 
 
-  function handleClear(index: number) {
-    const key = ("p" + (index + 1)) as keyof Scores;
-    setField(key, "");
+function handleClear(index: number) {
+     const key = ("score" + (index + 1)) as keyof Scores;
+     setField(key, "");
+}
+
+function handleAuto(index: number) {
+     const key = ("score" + (index + 1)) as keyof Scores;
+     const remaining = 360 - Number(total);
+     setScores((s) => ({ ...s, [key]: String(remaining) }));
   }
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+
+    const {score1, score2, score3, score4} = scores;
+
+    const condition1 = Number(score1)%5 || Number(score2)%5 || Number(score3)%5 || Number(score4)%5;
+    const condition2 = Number(score1) + Number(score2) + Number(score3) + Number(score4) === 360;
+
+    if(!condition1 && condition2) {
+     console.log("save score");
+    } else {
+     console.log("Invaild score");
+    }
+
+//     if(scores.score1)
     setOpen(false);
-    setScores({ p1: "", p2: "", p3: "", p4: "" });
+    setScores({ score1: "", score2: "", score3: "", score4: "" });
   }
 
   const rows = [
-    { id: "p1", label: "Player-1" },
-    { id: "p2", label: "Player-2" },
-    { id: "p3", label: "Player-3" },
-    { id: "p4", label: "Player-4" },
+    { id: "score1", label: "Player-1" },
+    { id: "score2", label: "Player-2" },
+    { id: "score3", label: "Player-3" },
+    { id: "score4", label: "Player-4" },
   ] as const;
 
   return (
@@ -53,7 +72,7 @@ export default function AddScoreDialog({ open, setOpen }: AddScoreDialogProps) {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid gap-3">
             {rows.map((row, idx) => (
-              <div key={row.id} className="">
+              <div key={row.id} className="space-y-2">
                 <Label htmlFor={row.id} className="text-sm font-medium">
                   {row.label}
                 </Label>
@@ -72,6 +91,7 @@ export default function AddScoreDialog({ open, setOpen }: AddScoreDialogProps) {
                       type="button"
                       variant="secondary"
                       className="rounded"
+                      onClick={() => handleAuto(idx)}
                     >
                       Auto
                     </Button>
