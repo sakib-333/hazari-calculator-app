@@ -68,6 +68,7 @@ export default function AddGameDialog({ open, setOpen }: AddGameDialogProps) {
     // Replace with your create-game logic
     const newGame: Game = {
       gameId: randomId(),
+      gameName: form.gameName,
       score1: {
         playerName: form.player1,
         scores: [],
@@ -85,6 +86,7 @@ export default function AddGameDialog({ open, setOpen }: AddGameDialogProps) {
         scores: [],
       },
       gameOver: false,
+      createdAt: Date().toString().split(" GMT")[0],
     }
     // console.log("Create game: ", newGame);
     dispatch(addNewGame(newGame));
