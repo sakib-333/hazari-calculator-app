@@ -4,23 +4,23 @@ export type Theme = "light" | "dark";
 
 export interface Score {
      playerName: string;
-     scores: number[],
+     scores: number[];
 }
 
 export interface Game {
      gameId: string;
      gameName: string;
-     score1: Score,
-     score2: Score,
-     score3: Score,
-     score4: Score,
+     score1: Score;
+     score2: Score;
+     score3: Score;
+     score4: Score;
      gameOver: boolean;
      createdAt: string;
 }
 
 export interface InitState {
-     activeTheme: Theme
-     games: Game[]
+     activeTheme: Theme;
+     games: Game[];
 }
 
 export interface Action {

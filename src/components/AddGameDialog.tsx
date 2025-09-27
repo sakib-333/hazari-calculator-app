@@ -71,19 +71,19 @@ export default function AddGameDialog({ open, setOpen }: AddGameDialogProps) {
       gameName: form.gameName,
       score1: {
         playerName: form.player1,
-        scores: [],
+        scores: [0],
       },
       score2: {
         playerName: form.player2,
-        scores: [],
+        scores: [0],
       },
       score3: {
         playerName: form.player3,
-        scores: [],
+        scores: [0],
       },
       score4: {
         playerName: form.player4,
-        scores: [],
+        scores: [0],
       },
       gameOver: false,
       createdAt: Date().toString().split(" GMT")[0],

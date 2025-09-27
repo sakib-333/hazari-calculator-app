@@ -1,12 +1,27 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import type { InitState } from "@/interfaces/dataType";
+import { useLocation } from "@tanstack/react-router";
+import { useSelector } from "react-redux";
 
 export default function ToalScoreTable() {
+    const location = useLocation();
+    const gameId = location.pathname.split("/games/")[1] ?? "0";
+    const game = useSelector((state:InitState) => state.games.find((g) => g.gameId === gameId));
+
+    if(!game) {
+        return <h1>No data Found</h1>
+    }
+
+    function getTotal(score: number[]):number {
+      return score.reduce((acc, curr) => acc + curr, 0);
+    }
+
   const rows = [
-    { no: 1, player: "Player-1", score: 550, require: 450 },
-    { no: 2, player: "Player-2", score: 550, require: 450 },
-    { no: 3, player: "Player-3", score: 550, require: 450 },
-    { no: 4, player: "Player-4", score: 550, require: 450 },
-  ];
+    { no: 1, player: game.score1.playerName, score: getTotal(game.score1.scores), require: 1000 - getTotal(game.score1.scores) },
+    { no: 2, player: game.score2.playerName, score: getTotal(game.score2.scores), require: 1000 - getTotal(game.score2.scores) },
+    { no: 3, player: game.score3.playerName, score: getTotal(game.score1.scores), require: 1000 - getTotal(game.score1.scores) },
+    { no: 4, player: game.score4.playerName, score: getTotal(game.score1.scores), require: 1000 - getTotal(game.score1.scores) },
+  ].sort((a, b) => b.score - a.score);
 
   return (
     <div className="w-full mx-auto text-center">
