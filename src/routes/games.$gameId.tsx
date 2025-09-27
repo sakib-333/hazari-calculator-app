@@ -1,3 +1,4 @@
+import ScoreDetailsTable from '@/components/ScoreDetailsTable'
 import ToalScoreTable from '@/components/ToalScoreTable'
 import { Button } from '@/components/ui/button'
 import { createFileRoute } from '@tanstack/react-router'
@@ -17,6 +18,7 @@ function GameDetails() {
         </Button>
       </div>
       <ToalScoreTable />
+      <ScoreDetailsTable />
     </section>
   )
 }
