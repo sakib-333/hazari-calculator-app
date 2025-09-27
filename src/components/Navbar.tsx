@@ -1,48 +1,29 @@
-import React from "react";
 import { Menu, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Link, useLocation } from "@tanstack/react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleTheme } from "@/redux/actions";
+import type { InitState } from "@/interfaces/dataType";
 
 // ------------------------------------------------------------
 // Lightweight theme manager for Vite (no next-themes required)
 // ------------------------------------------------------------
-function useTheme() {
-  const [theme, setTheme] = React.useState<"light" | "dark">(() => {
-    if (typeof window === "undefined") return "light";
-    const stored = localStorage.getItem("theme");
-    if (stored === "light" || stored === "dark") return stored;
-    // Prefer system on first load
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    return prefersDark ? "dark" : "light";
-  });
 
-  React.useEffect(() => {
-    const root = document.documentElement;
-    if (theme === "dark") root.classList.add("dark");
-    else root.classList.remove("dark");
-    localStorage.setItem("theme", theme);
-  }, [theme]);
-
-  const toggle = React.useCallback(() => {
-    setTheme((t) => (t === "dark" ? "light" : "dark"));
-  }, []);
-
-  return { theme, toggle };
-}
 
 function ThemeToggle() {
-  const { theme, toggle } = useTheme();
-  const isDark = theme === "dark";
+  const dispatch = useDispatch();
+  const activeTheme = useSelector((state:InitState) => state.activeTheme);
+
   return (
     <Button
       variant="ghost"
       size="icon"
       aria-label="Toggle theme"
-      onClick={toggle}
-      className="rounded-full"
+      onClick={()=> dispatch(toggleTheme())}
+      className="rounded-full cursor-pointer"
     >
-      {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+      {activeTheme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
     </Button>
   );
 }
