@@ -32,12 +32,6 @@ export default function AddScoreDialog({ open, setOpen }: AddScoreDialogProps) {
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    const parsed = {
-      p1: Number(scores.p1 || 0),
-      p2: Number(scores.p2 || 0),
-      p3: Number(scores.p3 || 0),
-      p4: Number(scores.p4 || 0),
-    };
     setOpen(false);
     setScores({ p1: "", p2: "", p3: "", p4: "" });
   }
