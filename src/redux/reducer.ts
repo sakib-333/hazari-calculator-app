@@ -17,7 +17,7 @@ export const hazariCalculatorAppReducer = (state = initState, action: Action) =>
                return state;              
      }
 
-     localStorage.setItem("hazari-calculator-state", JSON.stringify(state));
+     localStorage.setItem("hazari-calculator-state", JSON.stringify(newState));
 
      return newState;
 }
