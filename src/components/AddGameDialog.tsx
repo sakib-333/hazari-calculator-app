@@ -1,16 +1,14 @@
 // AddGameDialog.tsx
 import React from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import type { Game } from "@/interfaces/dataType";
+import { v4 as randomId } from 'uuid';
+import { useDispatch } from "react-redux";
+import { addNewGame } from "@/redux/actions";
 
 interface AddGameDialogProps {
   open: boolean;
@@ -37,6 +35,7 @@ export default function AddGameDialog({ open, setOpen }: AddGameDialogProps) {
   });
 
   const [errors, setErrors] = React.useState<Errors>({});
+  const dispatch = useDispatch();
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
@@ -67,7 +66,28 @@ export default function AddGameDialog({ open, setOpen }: AddGameDialogProps) {
     }
 
     // Replace with your create-game logic
-    console.log("Create game payload:", form);
+    const newGame: Game = {
+      gameId: randomId(),
+      score1: {
+        playerName: form.player1,
+        scores: [],
+      },
+      score2: {
+        playerName: form.player2,
+        scores: [],
+      },
+      score3: {
+        playerName: form.player3,
+        scores: [],
+      },
+      score4: {
+        playerName: form.player4,
+        scores: [],
+      },
+      gameOver: false,
+    }
+    // console.log("Create game: ", newGame);
+    dispatch(addNewGame(newGame));
 
     // Close only on success
     setOpen(false);
