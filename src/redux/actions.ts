@@ -26,6 +26,7 @@ export const resetScores = (gameId: string) => ({
      gameId
 })
 
-export const deleteLastScore = () => ({
+export const deleteLastScore = (gameId: string) => ({
      type: DELETE_LAST_SCORE,
+     gameId
 })

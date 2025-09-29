@@ -4,7 +4,7 @@ import ScoreDetailsTable from '@/components/ScoreDetailsTable'
 import ToalScoreTable from '@/components/ToalScoreTable'
 import { Button } from '@/components/ui/button'
 import type { InitState } from '@/interfaces/dataType'
-import { deleteGame, resetScores } from '@/redux/actions'
+import { deleteGame, deleteLastScore, resetScores } from '@/redux/actions'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { CirclePlus, RotateCcw, Trash2 } from 'lucide-react'
 import { useState } from 'react'
@@ -31,6 +31,11 @@ function GameDetails() {
 
   const handleResetScores = () => {
     dispatch(resetScores(gameId));
+    setOpenConfirmDialog(false);
+  }
+
+  const handleDeleteLastScores = () => {
+    dispatch(deleteLastScore(gameId));
     setOpenConfirmDialog(false);
   }
 
@@ -65,7 +70,7 @@ function GameDetails() {
           <Button size="sm" variant="destructive" onClick={() =>setOpenConfirmDialog(true)}>
             <RotateCcw /> <span>Reset</span>
           </Button>
-          <Button size="sm" variant="outline">
+          <Button size="sm" variant="outline" onClick={() => setOpenConfirmDialog(true)}>
             <Trash2 /> <span>Delete Last Score</span>
           </Button>
         </div>
@@ -75,6 +80,14 @@ function GameDetails() {
           description='All the scores will be deleted.'
           handleClose={() => setOpenConfirmDialog(false)}
           onConfirm={handleResetScores}
+        />
+
+        {/* Delete last scores dialog */}
+        <ConfirmDialog 
+          open = {openConfirmDialog}
+          description='Only last scores will be deleted.'
+          handleClose={() => setOpenConfirmDialog(false)}
+          onConfirm={handleDeleteLastScores}
         />
       </div>
       <ScoreDetailsTable />
