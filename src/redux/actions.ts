@@ -1,5 +1,5 @@
 import type { Game } from "@/interfaces/dataType";
-import { ADD_NEW_GAME, ADD_SCORE, DELETE_GAME, DELETE_LAST_SCORE, TOGGLE_THEME } from "./actionTypes";
+import { ADD_NEW_GAME, ADD_SCORE, DELETE_GAME, DELETE_LAST_SCORE, RESET_SCORES, TOGGLE_THEME } from "./actionTypes";
 
 export const toggleTheme = () => ({
      type: TOGGLE_THEME
@@ -18,6 +18,11 @@ export const deleteGame = (gameId: string) => ({
 export const addScore = (gameId: string, scores: number[]) => ({
      type: ADD_SCORE,
      scores: [...scores],
+     gameId
+})
+
+export const resetScores = (gameId: string) => ({
+     type: RESET_SCORES,
      gameId
 })
 

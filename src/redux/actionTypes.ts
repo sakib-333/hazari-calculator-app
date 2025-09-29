@@ -6,4 +6,6 @@ export const DELETE_GAME = "DELETE_GAME";
 
 export const ADD_SCORE = "ADD_SCORE";
 
+export const RESET_SCORES = "RESET_SCORES";
+
 export const DELETE_LAST_SCORE = "DELETE_LAST_SCORE";

@@ -1,13 +1,14 @@
 import AddScoreDialog from '@/components/AddScoreDialog'
-import DeleteGameDialog from '@/components/DeleteGameDialog'
+import ConfirmDialog from '@/components/ConfirmDialog'
 import ScoreDetailsTable from '@/components/ScoreDetailsTable'
 import ToalScoreTable from '@/components/ToalScoreTable'
 import { Button } from '@/components/ui/button'
 import type { InitState } from '@/interfaces/dataType'
-import { createFileRoute } from '@tanstack/react-router'
+import { deleteGame, resetScores } from '@/redux/actions'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { CirclePlus, RotateCcw, Trash2 } from 'lucide-react'
 import { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 export const Route = createFileRoute('/games/$gameId')({
   component: GameDetails,
@@ -17,11 +18,20 @@ function GameDetails() {
   const [open, setOpen] = useState <boolean> (false);
   const { gameId } = Route.useParams();
   const game = useSelector((state: InitState) => state.games.find(g =>g.gameId === gameId));
-  const [openGameDeleteDialog, setOpenGameDeleteDialog] = useState<boolean>(false);
+  const [openConfirmDialog, setOpenConfirmDialog] = useState<boolean>(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
 
-  const handleClose = () => {
-    setOpenGameDeleteDialog(false);
+  const handleDeleteGame = () => {
+    dispatch(deleteGame(gameId));
+    setOpenConfirmDialog(false)
+    navigate({to: "/"});
+  }
+
+  const handleResetScores = () => {
+    dispatch(resetScores(gameId));
+    setOpenConfirmDialog(false);
   }
 
   return (
@@ -31,16 +41,19 @@ function GameDetails() {
           <Button size={"sm"} disabled = {game?.gameOver} onClick={() => setOpen(true)}>
             <CirclePlus /><span>Add Score</span>
           </Button>
-          <Button size="sm" variant="destructive" onClick={() =>setOpenGameDeleteDialog(true)}>
+          <Button size="sm" variant="destructive" onClick={() =>setOpenConfirmDialog(true)}>
             <Trash2 /> <span>Delete</span>
           </Button>
         </div>
-      </div>
-        <DeleteGameDialog 
-          gameId={gameId}
-          open = {openGameDeleteDialog}
-          handleClose={handleClose}
+        {/* Delete game dialog */}
+        <ConfirmDialog 
+          open = {openConfirmDialog}
+          description='This game will be deleted!'
+          handleClose={() => setOpenConfirmDialog(false)}
+          onConfirm={handleDeleteGame}
         />
+      </div>
+        
       <AddScoreDialog 
         open = {open}
         setOpen = {setOpen}
@@ -49,13 +62,20 @@ function GameDetails() {
       <ToalScoreTable />
       <div className='flex justify-end'>
         <div className='space-x-2'>
-          <Button size="sm" variant="destructive">
+          <Button size="sm" variant="destructive" onClick={() =>setOpenConfirmDialog(true)}>
             <RotateCcw /> <span>Reset</span>
           </Button>
           <Button size="sm" variant="outline">
             <Trash2 /> <span>Delete Last Score</span>
           </Button>
         </div>
+        {/* Reset scores dialog */}
+        <ConfirmDialog 
+          open = {openConfirmDialog}
+          description='All the scores will be deleted.'
+          handleClose={() => setOpenConfirmDialog(false)}
+          onConfirm={handleResetScores}
+        />
       </div>
       <ScoreDetailsTable />
     </section>

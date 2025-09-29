@@ -1,4 +1,4 @@
-import type { ADD_NEW_GAME, ADD_SCORE, DELETE_GAME, DELETE_LAST_SCORE, TOGGLE_THEME } from "@/redux/actionTypes";
+import type { ADD_NEW_GAME, ADD_SCORE, DELETE_GAME, DELETE_LAST_SCORE, RESET_SCORES, TOGGLE_THEME } from "@/redux/actionTypes";
 
 export type Theme = "light" | "dark";
 
@@ -24,7 +24,7 @@ export interface InitState {
 }
 
 export interface Action {
-     type: typeof TOGGLE_THEME | typeof ADD_NEW_GAME | typeof DELETE_GAME | typeof ADD_SCORE | typeof DELETE_LAST_SCORE;
+     type: typeof TOGGLE_THEME | typeof ADD_NEW_GAME | typeof DELETE_GAME | typeof ADD_SCORE | typeof RESET_SCORES | typeof DELETE_LAST_SCORE;
      gameId: string;
      gameData?: Game;
      scores?: number[];
