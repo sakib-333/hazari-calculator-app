@@ -1,6 +1,6 @@
 import type { Action, InitState } from "@/interfaces/dataType";
 import initState from "./initState";
-import { ADD_NEW_GAME, ADD_SCORE, TOGGLE_THEME } from "./actionTypes";
+import { ADD_NEW_GAME, ADD_SCORE, DELETE_GAME, TOGGLE_THEME } from "./actionTypes";
 
 export const hazariCalculatorAppReducer = (state: InitState = initState, action: Action): InitState => {
   switch (action.type) {
@@ -19,6 +19,16 @@ export const hazariCalculatorAppReducer = (state: InitState = initState, action:
         ...state,
         games: [action.gameData, ...state.games],
       };
+      localStorage.setItem("hazari-calculator-state", JSON.stringify(newState));
+      return newState;
+    }
+    
+    case DELETE_GAME: {
+      if (!action.gameId) return state;
+      const newState: InitState = {
+        ...state,
+        games: state.games.filter(g => g.gameId !== action.gameId),
+      }
       localStorage.setItem("hazari-calculator-state", JSON.stringify(newState));
       return newState;
     }
