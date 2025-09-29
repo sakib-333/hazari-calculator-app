@@ -2,6 +2,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import type { InitState } from "@/interfaces/dataType";
 import { useLocation } from "@tanstack/react-router";
 import { useSelector } from "react-redux";
+import { v4 as randomId } from "uuid";
 
 export default function ToalScoreTable() {
     const location = useLocation();
@@ -17,10 +18,10 @@ export default function ToalScoreTable() {
     }
 
   const rows = [
-    { no: 1, player: game.score1.playerName, score: getTotal(game.score1.scores), require: 1000 - getTotal(game.score1.scores) < 0 ? 0 : 1000 - getTotal(game.score1.scores)},
-    { no: 2, player: game.score2.playerName, score: getTotal(game.score2.scores), require: 1000 - getTotal(game.score2.scores) < 0 ? 0 : 1000 - getTotal(game.score2.scores)},
-    { no: 3, player: game.score3.playerName, score: getTotal(game.score3.scores), require: 1000 - getTotal(game.score3.scores) < 0 ? 0 : 1000 - getTotal(game.score3.scores)},
-    { no: 4, player: game.score4.playerName, score: getTotal(game.score4.scores), require: 1000 - getTotal(game.score4.scores) < 0 ? 0 : 1000 - getTotal(game.score4.scores)},
+    { player: game.score1.playerName, score: getTotal(game.score1.scores), require: 1000 - getTotal(game.score1.scores) < 0 ? 0 : 1000 - getTotal(game.score1.scores)},
+    { player: game.score2.playerName, score: getTotal(game.score2.scores), require: 1000 - getTotal(game.score2.scores) < 0 ? 0 : 1000 - getTotal(game.score2.scores)},
+    { player: game.score3.playerName, score: getTotal(game.score3.scores), require: 1000 - getTotal(game.score3.scores) < 0 ? 0 : 1000 - getTotal(game.score3.scores)},
+    { player: game.score4.playerName, score: getTotal(game.score4.scores), require: 1000 - getTotal(game.score4.scores) < 0 ? 0 : 1000 - getTotal(game.score4.scores)},
   ].sort((a, b) => b.score - a.score);
 
   return (
@@ -35,9 +36,9 @@ export default function ToalScoreTable() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.no} className="border-b border-border">
-              <TableCell className="font-medium border-r border-border">{row.no}</TableCell>
+          {rows.map((row, indx) => (
+            <TableRow key={randomId()} className="border-b border-border">
+              <TableCell className="font-medium border-r border-border">{indx + 1}</TableCell>
               <TableCell className="border-r border-border">{row.player}</TableCell>
               <TableCell className="border-r border-border">{row.score}</TableCell>
               <TableCell>{row.require}</TableCell>

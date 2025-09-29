@@ -4,8 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { addScore } from "@/redux/actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
+import type { InitState } from "@/interfaces/dataType";
 
 type Scores = { score1: string; score2: string; score3: string; score4: string };
 
@@ -19,6 +20,7 @@ export default function AddScoreDialog({ open, setOpen, gameId }: AddScoreDialog
   const [scores, setScores] = React.useState<Scores>({ score1: "", score2: "", score3: "", score4: "" });
   const [total, setTotal] = React.useState<string>("0");
   const dispatch = useDispatch();
+  const game = useSelector((state: InitState) => state.games.find(g => g.gameId === gameId));
 
   React.useEffect(() => {
      const total = Number(scores.score1)+Number(scores.score2)+Number(scores.score3)+Number(scores.score4)
@@ -65,10 +67,10 @@ function handleAuto(index: number) {
   }
 
   const rows = [
-    { id: "score1", label: "Player-1" },
-    { id: "score2", label: "Player-2" },
-    { id: "score3", label: "Player-3" },
-    { id: "score4", label: "Player-4" },
+    { id: "score1", label: game?.score1.playerName },
+    { id: "score2", label: game?.score2.playerName },
+    { id: "score3", label: game?.score3.playerName },
+    { id: "score4", label: game?.score4.playerName },
   ] as const;
 
   return (
