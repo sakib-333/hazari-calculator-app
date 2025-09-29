@@ -113,6 +113,7 @@ export const hazariCalculatorAppReducer = (state: InitState = initState, action:
               score2: {...g.score2, scores: []},
               score3: {...g.score3, scores: []},
               score4: {...g.score4, scores: []},
+              gameOver: false,
             }
           })
         }

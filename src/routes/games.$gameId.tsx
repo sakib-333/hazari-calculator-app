@@ -16,27 +16,29 @@ export const Route = createFileRoute('/games/$gameId')({
 
 function GameDetails() {
   const [open, setOpen] = useState <boolean> (false);
+  const [open1, setOpen1] = useState <boolean> (false);
+  const [open2, setOpen2] = useState <boolean> (false);
+  const [open3, setOpen3] = useState <boolean> (false);
   const { gameId } = Route.useParams();
   const game = useSelector((state: InitState) => state.games.find(g =>g.gameId === gameId));
-  const [openConfirmDialog, setOpenConfirmDialog] = useState<boolean>(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
 
   const handleDeleteGame = () => {
     dispatch(deleteGame(gameId));
-    setOpenConfirmDialog(false)
+    setOpen1(false)
     navigate({to: "/"});
   }
 
   const handleResetScores = () => {
     dispatch(resetScores(gameId));
-    setOpenConfirmDialog(false);
+    setOpen2(false);
   }
 
   const handleDeleteLastScores = () => {
     dispatch(deleteLastScore(gameId));
-    setOpenConfirmDialog(false);
+    setOpen3(false);
   }
 
   return (
@@ -46,15 +48,15 @@ function GameDetails() {
           <Button size={"sm"} disabled = {game?.gameOver} onClick={() => setOpen(true)}>
             <CirclePlus /><span>Add Score</span>
           </Button>
-          <Button size="sm" variant="destructive" onClick={() =>setOpenConfirmDialog(true)}>
+          <Button size="sm" variant="destructive" onClick={() =>setOpen1(true)}>
             <Trash2 /> <span>Delete</span>
           </Button>
         </div>
         {/* Delete game dialog */}
         <ConfirmDialog 
-          open = {openConfirmDialog}
+          open = {open1}
           description='This game will be deleted!'
-          handleClose={() => setOpenConfirmDialog(false)}
+          handleClose={() => setOpen1(false)}
           onConfirm={handleDeleteGame}
         />
       </div>
@@ -67,26 +69,26 @@ function GameDetails() {
       <ToalScoreTable />
       <div className='flex justify-end'>
         <div className='space-x-2'>
-          <Button size="sm" variant="destructive" onClick={() =>setOpenConfirmDialog(true)}>
+          <Button size="sm" variant="destructive" onClick={() =>setOpen2(true)}>
             <RotateCcw /> <span>Reset</span>
           </Button>
-          <Button size="sm" variant="outline" onClick={() => setOpenConfirmDialog(true)}>
+          <Button size="sm" variant="outline" onClick={() => setOpen3(true)}>
             <Trash2 /> <span>Delete Last Score</span>
           </Button>
         </div>
         {/* Reset scores dialog */}
         <ConfirmDialog 
-          open = {openConfirmDialog}
+          open = {open2}
           description='All the scores will be deleted.'
-          handleClose={() => setOpenConfirmDialog(false)}
+          handleClose={() => setOpen2(false)}
           onConfirm={handleResetScores}
         />
 
         {/* Delete last scores dialog */}
         <ConfirmDialog 
-          open = {openConfirmDialog}
+          open = {open3}
           description='Only last scores will be deleted.'
-          handleClose={() => setOpenConfirmDialog(false)}
+          handleClose={() => setOpen3(false)}
           onConfirm={handleDeleteLastScores}
         />
       </div>
