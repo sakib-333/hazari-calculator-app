@@ -109,10 +109,10 @@ export const hazariCalculatorAppReducer = (state: InitState = initState, action:
             
             return {
               ...g,
-              score1: {...g.score1, scores: []},
-              score2: {...g.score2, scores: []},
-              score3: {...g.score3, scores: []},
-              score4: {...g.score4, scores: []},
+              score1: {...g.score1, scores: [0]},
+              score2: {...g.score2, scores: [0]},
+              score3: {...g.score3, scores: [0]},
+              score4: {...g.score4, scores: [0]},
               gameOver: false,
             }
           })
